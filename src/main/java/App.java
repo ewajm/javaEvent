@@ -7,63 +7,100 @@ public class App {
   public static void main(String[] args) {
     Console console = System.console();
     boolean leave = false;
+    int userPartyDoneChoice;
+    int userInput;
+    int guestNum;
+    int randomParty;
+    int foodType;
+    int bevType;
+    int entertainmentType;
+    Event newEvent;
+    boolean changeEvent;
+    boolean villainInsurance;
+    boolean budget;
     List<Event> eventList = new ArrayList<Event>();
     System.out.println("Welcome to Gotham Party Planning - the only remaining party planning company in Gotham City because the rest of them have been destroyed by supervillains!\nAs the only party planners in the city, we offer a wide variety of options for all party sizes and budgets!\nWe are confident that we can meet your party needs - and even if we can't, it's not like you can go anywhere else!");
-    System.out.println("");
-    System.out.println("~*~*~*~*~*~*~*~*~*~*~*~Gotham Party Planning~*~*~*~*~*~*~*~*~*~*~");
-    System.out.println("");
     do{
+      //main program loop
+      System.out.println("");
+      System.out.println("~*~*~*~*~*~*~*~*~*~*~*~Gotham Party Planning~*~*~*~*~*~*~*~*~*~*~");
+      System.out.println("");
       System.out.println("What would you like to do?\n1. Plan a party\n2. See all planned parties\n3. Leave");
-      int userInput = parseWithDefault(console.readLine().trim(), 5);
+      userInput = parseWithDefault(console.readLine().trim(), 5);
       if(userInput == 1){
+        //create party
         System.out.println("Let's get started planning your party!");
-        int guestNum = getPartyElementChoice(1);
-        int foodType = getPartyElementChoice(2);
-        int bevType = getPartyElementChoice(3);
-        int entertainmentType = getPartyElementChoice(4);
-        Event newEvent = new Event(guestNum, foodType-1, bevType-1, entertainmentType-1);
-        boolean changeEvent;
-        do{
-          System.out.println("");
-          System.out.println("~*~*~*~*~*~*~*~*~*~*~*~Gotham Party Planning~*~*~*~*~*~*~*~*~*~*~");
-          System.out.println("");
-          System.out.println("Thank you for your input! Currently, your party will cost: $" + newEvent.getCost());
-          System.out.println("Would you like to make any changes before we move on? (Y/N)");
-          changeEvent = (console.readLine().toUpperCase().trim().equals("Y"));
-          if(changeEvent){
-            System.out.println("What would you like to change?\n1. Guest Number\n2. Food fanciness\n3.Beverage effect\n4.Entertainment Impressiveness");
-            int whatToChange = getProperInput(4);
-            int changeThingTo = getPartyElementChoice(whatToChange);
-            //need to subtract 1 from changeThingTo because ui choice numbering starts from 1 and arrays start from 0
-            newEvent.changeMind(whatToChange, changeThingTo-1);
-            //write setters and determine what to set (re-set everything? REFACTOR PARTY ELEMENTS ABOVE AS ARRAY OF INTS AW YISS)
+        guestNum = getPartyElementChoice(1);
+        System.out.println("Please choose one: \n1. I know what I want to do with my party \n2. I know nothing, can you choose for me?");
+        randomParty = getProperInput(2);
+        if(randomParty == 1){
+          //non-random party
+          foodType = getPartyElementChoice(2);
+          bevType = getPartyElementChoice(3);
+          entertainmentType = getPartyElementChoice(4);
+          newEvent = new Event(guestNum, foodType-1, bevType-1, entertainmentType-1);
+          do{
+            System.out.println("");
+            System.out.println("~*~*~*~*~*~*~*~*~*~*~*~Gotham Party Planning~*~*~*~*~*~*~*~*~*~*~");
+            System.out.println("");
+            System.out.println("Thank you for your input! Currently, your party will cost: $" + newEvent.getCost());
+            System.out.println("Would you like to make any changes before we move on? (Y/N)");
+            changeEvent = (console.readLine().toUpperCase().trim().equals("Y"));
+            if(changeEvent){
+              System.out.println("What would you like to change?\n1. Guest Number\n2. Food fanciness\n3.Beverage effect\n4.Entertainment Impressiveness");
+              int whatToChange = getProperInput(4);
+              int changeThingTo = getPartyElementChoice(whatToChange);
+              //need to subtract 1 from changeThingTo because ui choice numbering starts from 1 and arrays start from 0
+              newEvent.changeMind(whatToChange, changeThingTo-1);
+            }
+          }while(changeEvent);
+          System.out.println("Great! Let's get some details, then.");
+          do{
+            System.out.println("--------------------------------------");
+            System.out.println("Please choose the number corresponding to the food you want from the options below:");
+            String[] foodArray = newEvent.getFoodType();
+            for(int i = 0; i < foodArray.length; i++){
+              System.out.println(i+1 + ". " + foodArray[i]);
+            }
+            //subtract one from result in order to get actual array index
+            newEvent.chooseFood(getProperInput(foodArray.length)-1);
+            System.out.println("--------------------------------------");
+            System.out.println("Please choose the number corresponding to the entertainment you want from the options below:");
+            String[] entertainmentArray = newEvent.getEntertainmentType();
+            for(int i = 0; i < entertainmentArray.length; i++){
+              System.out.println(i+1 + ". " + entertainmentArray[i]);
+            }
+            //subtract one from result in order to get actual array index
+            newEvent.chooseEntertainment(getProperInput(entertainmentArray.length)-1);
+            System.out.println("Would you like to purchase anti-supervillain-attack insurance? This will partly cover guests' medical/funeral expenses, counseling fees, and property damage that may arise from such an attack! Y/N (Additional $20,000 cost)");
+            villainInsurance = (console.readLine().toUpperCase().trim().equals("Y"));
+            newEvent.setInsurance(villainInsurance);
+            System.out.println("Thank you! Here is your party summary:");
+            printParty(newEvent);
+            System.out.println("What do you think?\n1. Looks great let's do it!\n2. I need to change my food/entertainment choice\n3. I need to start over");
+            userPartyDoneChoice = getProperInput(3);
+          }while(userPartyDoneChoice == 2);
+        } else {
+          //random party
+          System.out.println("Do you care about price? (Y/N)");
+          budget = console.readLine().toUpperCase().trim().equals("Y");
+          if(budget){
+            System.out.println("Please choose your budget range: \n1. Lower End\n2. Middleish\n3. I want to splurge\n4. I have so much money oh my god");
+            int budgetNum = getProperInput(4);
+            //sutract 1 from budgetNum to make it correspond to array indices
+            newEvent = new Event(guestNum, budgetNum-1);
+          }else{
+            System.out.println("Ok! One completely random party coming right up!");
+            newEvent = new Event(guestNum, 5);
           }
-        }while(changeEvent);
-        System.out.println("Great! Let's get some details, then.");
-        int userPartyDoneChoice;
-        do{
-          System.out.println("--------------------------------------");
-          System.out.println("Please choose the number corresponding to the food you want from the options below:");
-          String[] foodArray = newEvent.getFoodType();
-          for(int i = 0; i < foodArray.length; i++){
-            System.out.println(i + ". " + foodArray[i]);
-          }
-          newEvent.chooseFood(getProperInput(foodArray.length-1));
-          System.out.println("--------------------------------------");
-          System.out.println("Please choose the number corresponding to the entertainment you want from the options below:");
-          String[] entertainmentArray = newEvent.getEntertainmentType();
-          for(int i = 0; i < entertainmentArray.length; i++){
-            System.out.println(i + ". " + entertainmentArray[i]);
-          }
-          newEvent.chooseEntertainment(getProperInput(entertainmentArray.length-1));
           System.out.println("Would you like to purchase anti-supervillain-attack insurance? This will partly cover guests' medical/funeral expenses, counseling fees, and property damage that may arise from such an attack! Y/N (Additional $20,000 cost)");
-          boolean villainInsurance = (console.readLine().toUpperCase().trim().equals("Y"));
+          villainInsurance = (console.readLine().toUpperCase().trim().equals("Y"));
           newEvent.setInsurance(villainInsurance);
           System.out.println("Thank you! Here is your party summary:");
           printParty(newEvent);
-          System.out.println("What do you think?\n1. Looks great let's do it!\n2. I need to change my food/entertainment choice\n3. I need to start over");
-          userPartyDoneChoice = getProperInput(3);
-        }while(userPartyDoneChoice == 2);
+          System.out.println("What do you think?\n1. Looks great let's do it!\n2. I need to start over");
+          userPartyDoneChoice = getProperInput(2);
+        }
         if(userPartyDoneChoice == 1){
           System.out.println("");
           System.out.println("Great! We will contact you soon! Please note that in order to prevent supervillains from finding out about and targeting our customers' parties, it is company policy to never discuss the timing of these events except in person. If someone claiming to be from Gotham Party Planning calls or emails you asking about the date, they are not a real Gotham Party Planning employee!");
@@ -106,10 +143,10 @@ public class App {
     int userChoice;
     do{
       userChoice = parseWithDefault(newConsole.readLine(), maxChoice+1);
-      if(userChoice > maxChoice){
+      if(userChoice > maxChoice || userChoice < 1){
         System.out.println("Please enter one of the numbers listed.");
       }
-    } while (userChoice > maxChoice);
+    } while (userChoice > maxChoice || userChoice < 1);
     return userChoice;
   }
 

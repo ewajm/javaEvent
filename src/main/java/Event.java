@@ -1,3 +1,5 @@
+import java.util.Random;
+
 public class Event {
   private int mNumGuests;
   private String[] mFoodType;
@@ -20,6 +22,23 @@ public class Event {
     mBevType = bevTypeArray[bevType];
     mBevCostPerPerson = (int)Math.pow(3, bevType+1);
     mEntertainmentType = entertainmentTypeArray[entertainmentType];
+    mEntertainmentCost = (int)Math.pow(10, entertainmentType+1);
+    mInsurance = false;
+  }
+
+  public Event(int numGuests, int howRandom){
+    mNumGuests = numGuests;
+    Random random = new Random();
+    int foodType = (howRandom == 5) ? random.nextInt(foodTypeArray.length):howRandom;
+    mFoodType = foodTypeArray[foodType];
+    chooseFood(random.nextInt(mFoodType.length));
+    mFoodCostPerPerson = (int)Math.pow(4, foodType+1);
+    int bevType = (howRandom == 5) ? random.nextInt(bevTypeArray.length):howRandom;
+    mBevType = bevTypeArray[bevType];
+    mBevCostPerPerson = (int)Math.pow(3, bevType+1);
+    int entertainmentType = (howRandom == 5) ? random.nextInt(entertainmentTypeArray.length):howRandom;
+    mEntertainmentType = entertainmentTypeArray[entertainmentType];
+    chooseEntertainment(random.nextInt(mEntertainmentType.length));
     mEntertainmentCost = (int)Math.pow(10, entertainmentType+1);
     mInsurance = false;
   }
@@ -70,7 +89,7 @@ public class Event {
     if(!mInsurance){
       return mNumGuests*mFoodCostPerPerson + mNumGuests*mBevCostPerPerson + mEntertainmentCost;
     } else {
-      return mNumGuests*mFoodCostPerPerson + mNumGuests*mBevCostPerPerson + mEntertainmentCost;
+      return mNumGuests*mFoodCostPerPerson + mNumGuests*mBevCostPerPerson + mEntertainmentCost + 20000;
     }
   }
 
