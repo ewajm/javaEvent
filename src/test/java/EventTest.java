@@ -44,6 +44,13 @@ public class EventTest{
   }
 
   @Test
+  public void getInsurance_returnsmFoodChoice_boolean() {
+    Event testEvent = new Event(100, 0, 0, 0);
+    testEvent.setInsurance(true);
+    assertEquals(true, testEvent.getInsurance());
+  }
+
+  @Test
   public void getFoodChoice_returnsmFoodChoice_String() {
     Event testEvent = new Event(100, 0, 0, 0);
     testEvent.chooseFood(0);
@@ -70,7 +77,7 @@ public class EventTest{
   public void getCost_returnsPartyCost_int() {
     Event testEvent = new Event(100, 0, 0, 0);
     int expectedOutput = 710;
-    assertEquals(expectedOutput, testEvent.getCost(false));
+    assertEquals(expectedOutput, testEvent.getCost());
   }
 
   @Test
