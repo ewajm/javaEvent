@@ -33,7 +33,7 @@ public class EventTest{
   public void getEntertainmentType_returnsEntertainmentTypeArray_StringArray() {
     Event testEvent = new Event(100, 0, 0, 0);
     String[] expectedOutput = {"a deck of cards", "a stack of printed out word searches", "my cousin Kevin playing the kazoo", "a radio"};
-    assertEquals(expectedOutput, testEvent.getEntertainmentType());
+    assertArrayEquals(expectedOutput, testEvent.getEntertainmentType());
   }
 
   @Test
@@ -71,5 +71,13 @@ public class EventTest{
     Event testEvent = new Event(100, 0, 0, 0);
     int expectedOutput = 710;
     assertEquals(expectedOutput, testEvent.getCost());
+  }
+
+  @Test
+  public void changeMind_changesDesignatedValue() {
+    Event testEvent = new Event(100, 0, 0, 0);
+    testEvent.changeMind(2, 2);
+    String[] expectedOutput = {"actually good sushi", "A full 5 course meal", "beef from cows that were treated really well in life", "locally sourced organic everything"};
+    assertArrayEquals(expectedOutput, testEvent.getFoodType());
   }
 }

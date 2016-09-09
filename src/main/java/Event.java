@@ -59,4 +59,24 @@ public class Event {
   public int getCost(){
     return mNumGuests*mFoodCostPerPerson + mNumGuests*mBevCostPerPerson + mEntertainmentCost;
   }
+
+  public void changeMind(int whatToChange, int changeThingTo){
+    switch(whatToChange){
+      case 1:
+        mNumGuests = changeThingTo;
+        break;
+      case 2:
+        mFoodType = foodTypeArray[changeThingTo];
+        mFoodCostPerPerson = (int)Math.pow(4, changeThingTo+1);
+        break;
+      case 3:
+        mBevType = bevTypeArray[changeThingTo];
+        mBevCostPerPerson = (int)Math.pow(3, changeThingTo+1);
+        break;
+      case 4:
+        mEntertainmentType = entertainmentTypeArray[changeThingTo];
+        mEntertainmentCost = mEntertainmentCost = (int)Math.pow(10, changeThingTo+1);
+        break;
+    }
+  }
 }
