@@ -9,8 +9,8 @@ _A simple console event planner that will take in user input and output an expec
 ## Setup/Installation Requirements
 
 * _Requires Java and Gradle installation_
- * _[Java version 1.8.0_101](http://www.oracle.com/technetwork/java/index.htmls)_
- * _[Gradle version 3.0](https://gradle.org/)_
+ * [Java version 1.8.0_101](http://www.oracle.com/technetwork/java/index.htmls)
+ * [Gradle version 3.0](https://gradle.org/)
 * _Copy the repository from GitHub_
 * _Compile with gradle_
 * _Program will run in the console_
