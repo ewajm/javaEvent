@@ -121,9 +121,12 @@ public class App {
       } else if(userInput == 2){
         //list every party in arraylist
         System.out.println("Here are the parties you are planning so far:");
+        int totalCost = 0;
         for(Event event : eventList){
           printParty(event);
+          totalCost += event.getCost();
         }
+        System.out.println("Your current total: $" + totalCost);
         System.out.println("Press enter to continue:");
         console.readLine();
       } else if(userInput == 3){
