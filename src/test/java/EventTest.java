@@ -1,10 +1,7 @@
 import org.junit.*;
 import static org.junit.Assert.*;
-import java.util.ArrayList;
-import java.util.List;
 
 public class EventTest{
-  //REMEMBER TO RENAME!!!!!!1!one!
   @Test
   public void newEvent_instantiatesCorrectly_Event() {
     Event testEvent = new Event(100, 1, 1, 1);
