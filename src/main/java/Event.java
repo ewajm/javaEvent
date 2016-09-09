@@ -1,12 +1,12 @@
 public class Event {
   private int mNumGuests;
   private String[] mFoodType;
-  private String mFoodChoice;
+  private String mFoodChoice = "";
   private int mFoodCostPerPerson;
   private String mBevType;
   private int mBevCostPerPerson;
   private String[] mEntertainmentType;
-  private String mEntertainmentChoice;
+  private String mEntertainmentChoice = "";
   private int mEntertainmentCost;
   private String[][] foodTypeArray = {new String[]{"pizza", "tacos", "sandwiches", "those little cream cheese roll things"}, new String[]{"fancy meat and cheese trays", "buffet style food of an ethnicity of your choice", "everything that we could find to fry has been found and fried", "the kind of sushi you find at Chinese buffets"}, new String[]{"actually good sushi", "A full 5 course meal", "beef from cows that were treated really well in life", "locally sourced organic everything"}, new String[]{"full churrascaria setup", "foods that have to be prepared a certain way or you die that you can brag about having eaten later", "a variety of foods that are deliberately on fire","caviar. just caviar. no other food except mounds of caviar sitting around"}};
   private String[] bevTypeArray = {"Water", "Soda", "Booze", "Soda and Booze"};
@@ -43,8 +43,16 @@ public class Event {
     return mFoodChoice;
   }
 
+  public String getFoodChoice(){
+    return mFoodChoice;
+  }
+
   public String chooseEntertainment(int choiceNum){
     mEntertainmentChoice = mEntertainmentType[choiceNum];
+    return mEntertainmentChoice;
+  }
+
+  public String getEntertainmentChoice(){
     return mEntertainmentChoice;
   }
 

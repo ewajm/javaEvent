@@ -44,10 +44,26 @@ public class EventTest{
   }
 
   @Test
+  public void getFoodChoice_returnsmFoodChoice_String() {
+    Event testEvent = new Event(100, 0, 0, 0);
+    testEvent.chooseFood(0);
+    String expectedOutput = "pizza";
+    assertEquals(expectedOutput, testEvent.getFoodChoice());
+  }
+
+  @Test
   public void chooseEntertainment_returnsmEntertainmentChoice_String() {
     Event testEvent = new Event(100, 0, 0, 0);
     String expectedOutput = "a deck of cards";
     assertEquals(expectedOutput, testEvent.chooseEntertainment(0));
+  }
+
+  @Test
+  public void getEntertainmentChoice_returnsmEntertainmentChoice_String() {
+    Event testEvent = new Event(100, 0, 0, 0);
+    testEvent.chooseEntertainment(0);
+    String expectedOutput = "a deck of cards";
+    assertEquals(expectedOutput, testEvent.getEntertainmentChoice());
   }
 
   @Test
