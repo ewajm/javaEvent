@@ -1,24 +1,27 @@
-# _Template_
+# _Event Planner_
 
-#### By _Ewa Manek and Jason Downing_
+#### By _Ewa Manek_
 
 ## Description
 
-_A template java app for use with gradle and junit_
+_A simple console event planner that will take in user input and output an expected cost_
 
 ## Setup/Installation Requirements
 
+* _Requires Java and Gradle installation_
+ * _Java version 1.8.0_101_
+ * _Gradle version 3.0_
 * _Copy the repository from GitHub_
-* _Open in code editor of your choice_
-* _Make sure you have gradle and junit installed!_
+* _Compile with gradle_
+* _Program will run in the console_
 
 
 ## GitHub link
 
-https://github.com/ewajm/javaTemplate
+https://github.com/ewajm/event
 
 ## Licensing
 
 * MIT
 
-Copyright (c) 2016 **_Ewa Manek and Jason Downing_**
+Copyright (c) 2016 **_Ewa Manek_**
