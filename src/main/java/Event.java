@@ -56,8 +56,12 @@ public class Event {
     return mEntertainmentChoice;
   }
 
-  public int getCost(){
-    return mNumGuests*mFoodCostPerPerson + mNumGuests*mBevCostPerPerson + mEntertainmentCost;
+  public int getCost(boolean insurance){
+    if(!insurance){
+      return mNumGuests*mFoodCostPerPerson + mNumGuests*mBevCostPerPerson + mEntertainmentCost;
+    } else {
+      return mNumGuests*mFoodCostPerPerson + mNumGuests*mBevCostPerPerson + mEntertainmentCost + 20000;
+    }
   }
 
   public void changeMind(int whatToChange, int changeThingTo){

@@ -70,7 +70,7 @@ public class EventTest{
   public void getCost_returnsPartyCost_int() {
     Event testEvent = new Event(100, 0, 0, 0);
     int expectedOutput = 710;
-    assertEquals(expectedOutput, testEvent.getCost());
+    assertEquals(expectedOutput, testEvent.getCost(false));
   }
 
   @Test

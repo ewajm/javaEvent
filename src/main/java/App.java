@@ -27,7 +27,7 @@ public class App {
           System.out.println("");
           System.out.println("~*~*~*~*~*~*~*~*~*~*~*~Gotham Party Planning~*~*~*~*~*~*~*~*~*~*~");
           System.out.println("");
-          System.out.println("Thank you for your input! Currently, your party will cost: $" + newEvent.getCost());
+          System.out.println("Thank you for your input! Currently, your party will cost: $" + newEvent.getCost(false));
           System.out.println("Would you like to make any changes before we move on? (Y/N)");
           changeEvent = (console.readLine().toUpperCase().trim().equals("Y"));
           if(changeEvent){
@@ -40,36 +40,48 @@ public class App {
           }
         }while(changeEvent);
         System.out.println("Great! Let's get some details, then.");
-        System.out.println("Please choose the number corresponding to the food you want from the options below:");
-        String[] foodArray = newEvent.getFoodType();
-        for(int i = 0; i < foodArray.length; i++){
-          System.out.println(i + ". " + foodArray[i]);
+        int userPartyDoneChoice;
+        do{
+          System.out.println("Please choose the number corresponding to the food you want from the options below:");
+          String[] foodArray = newEvent.getFoodType();
+          for(int i = 0; i < foodArray.length; i++){
+            System.out.println(i + ". " + foodArray[i]);
+          }
+          newEvent.chooseFood(getProperInput(foodArray.length-1));
+          System.out.println("--------------------------------------");
+          System.out.println("Please choose the number corresponding to the entertainment you want from the options below:");
+          String[] entertainmentArray = newEvent.getEntertainmentType();
+          for(int i = 0; i < entertainmentArray.length; i++){
+            System.out.println(i + ". " + entertainmentArray[i]);
+          }
+          newEvent.chooseEntertainment(getProperInput(entertainmentArray.length-1));
+          System.out.println("Would you like to purchase anti-supervillain-attack insurance? This will partly cover guests' medical/funeral expenses, counseling fees, and property damage that may arise from such an attack! Y/N (Additional $20,000 cost)");
+          boolean villainInsurance = (console.readLine().toUpperCase().trim().equals("Y"));
+          System.out.println("");
+          System.out.println("~*~*~*~*~*~*~*~*~*~*~*~Gotham Party Planning~*~*~*~*~*~*~*~*~*~*~");
+          System.out.println("");
+          System.out.println("Thank you! Here is your party summary:");
+          System.out.println("Number of guests: " + newEvent.getNumGuests());
+          System.out.println("Food: " + newEvent.getFoodChoice());
+          System.out.println("Beverages: " + newEvent.getBevType());
+          System.out.println("Entertainment: " + newEvent.getEntertainmentChoice());
+          System.out.println("--------------------------------------");
+          System.out.println("Total Cost: $" + newEvent.getCost(villainInsurance));
+          System.out.println("");
+          System.out.println("~*~*~*~*~*~*~*~*~*~*~*~Gotham Party Planning~*~*~*~*~*~*~*~*~*~*~");
+          System.out.println("");
+          System.out.println("What do you think?\n1. Looks great let's do it!\n2. I need to change my food/entertainment choice\n3. I need to start over");
+          userPartyDoneChoice = getProperInput(3);
+        }while(userPartyDoneChoice == 2);
+        if(userPartyDoneChoice == 1){
+          System.out.println("Great! We will contact you soon! Please note that in order to prevent supervillains from finding out about and targeting our customers' parties, it is company policy to never discuss the timing of these events except in person. If someone claiming to be from Gotham Party Planning calls or emails you asking about the date, they are not a real Gotham Party Planning employee!");
+          System.out.println("~*~Gotham Party Planning Disclaimer~*~\nCitizens of Gotham plan large gatherings at their own risk. Gotham Party Planning is unable to offer any guarantees regarding the presence/absence of any supervillains (or Batman/any of his allies) at your event.");
+          do{
+            System.out.println("I have read and understood the Gotham Party Planning Disclaimer (Y/N)");
+          } while(!console.readLine().toUpperCase().trim().equals("Y"));
+          eventList.add(newEvent);
         }
-        newEvent.chooseFood(getProperInput(foodArray.length-1));
-        System.out.println("--------------------------------------");
-        System.out.println("Please choose the number corresponding to the entertainment you want from the options below:");
-        String[] entertainmentArray = newEvent.getEntertainmentType();
-        for(int i = 0; i < entertainmentArray.length; i++){
-          System.out.println(i + ". " + entertainmentArray[i]);
-        }
-        newEvent.chooseEntertainment(getProperInput(entertainmentArray.length-1));
-        System.out.println("");
-        System.out.println("~*~*~*~*~*~*~*~*~*~*~*~Gotham Party Planning~*~*~*~*~*~*~*~*~*~*~");
-        System.out.println("");
-        System.out.println("Thank you! Here is your party summary:");
-        System.out.println("Number of guests: " + newEvent.getNumGuests());
-        System.out.println("Food: " + newEvent.getFoodChoice());
-        System.out.println("Beverages: " + newEvent.getBevType());
-        System.out.println("Entertainment: " + newEvent.getEntertainmentChoice());
-        System.out.println("--------------------------------------");
-        System.out.println("Total Cost: $" + newEvent.getCost());
-        System.out.println("");
-        System.out.println("~*~*~*~*~*~*~*~*~*~*~*~Gotham Party Planning~*~*~*~*~*~*~*~*~*~*~");
-        System.out.println("");
-        System.out.println("What do you think?\n1. Looks great let's do it!\n2. I need to change my food/entertainment choice\n3. I need to start over")
-        eventList.add(newEvent);
       } else if(userInput == 2){
-
       } else if(userInput == 3){
         leave = true;
       } else {
@@ -99,6 +111,22 @@ public class App {
       }
     } while (userChoice > maxChoice);
     return userChoice;
+  }
+
+  public static void printParty(Event event, boolean insurance){
+    System.out.println("");
+    System.out.println("~*~*~*~*~*~*~*~*~*~*~*~Gotham Party Planning~*~*~*~*~*~*~*~*~*~*~");
+    System.out.println("");
+    System.out.println("Thank you! Here is your party summary:");
+    System.out.println("Number of guests: " + event.getNumGuests());
+    System.out.println("Food: " + event.getFoodChoice());
+    System.out.println("Beverages: " + event.getBevType());
+    System.out.println("Entertainment: " + event.getEntertainmentChoice());
+    System.out.println("--------------------------------------");
+    System.out.println("Total Cost: $" + event.getCost(insurance));
+    System.out.println("");
+    System.out.println("~*~*~*~*~*~*~*~*~*~*~*~Gotham Party Planning~*~*~*~*~*~*~*~*~*~*~");
+    System.out.println("");
   }
 
   //method for outputting party questions
