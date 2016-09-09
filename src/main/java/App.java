@@ -7,12 +7,13 @@ public class App {
   public static void main(String[] args) {
     Console console = System.console();
     boolean leave = false;
-    System.out.println("Welcome to Gotham Party Planning - the only remaining party planning company in Gotham City because the rest of them have been destroyed!\nAs the only party planners in the city, we offer a wide variety of options for all party sizes and budgets!\nWe are confident that we can meet your party needs - and even if we can't, it's not like you can go anywhere else!");
+    List<Event> eventList = new ArrayList<Event>();
+    System.out.println("Welcome to Gotham Party Planning - the only remaining party planning company in Gotham City because the rest of them have been destroyed by supervillains!\nAs the only party planners in the city, we offer a wide variety of options for all party sizes and budgets!\nWe are confident that we can meet your party needs - and even if we can't, it's not like you can go anywhere else!");
     System.out.println("");
     System.out.println("~*~*~*~*~*~*~*~*~*~*~*~Gotham Party Planning~*~*~*~*~*~*~*~*~*~*~");
     System.out.println("");
     do{
-      System.out.println("What would you like to do?\n1. Plan a party\n2. See all planned parties\n3.Leave");
+      System.out.println("What would you like to do?\n1. Plan a party\n2. See all planned parties\n3. Leave");
       int userInput = parseWithDefault(console.readLine().trim(), 5);
       if(userInput == 1){
         System.out.println("Let's get started planning your party!");
@@ -32,7 +33,9 @@ public class App {
           if(changeEvent){
             System.out.println("What would you like to change?\n1. Guest Number\n2. Food fanciness\n3.Beverage effect\n4.Entertainment Impressiveness");
             int whatToChange = getProperInput(4);
-            int changeThingto = getPartyElementChoice(whatToChange);
+            int changeThingTo = getPartyElementChoice(whatToChange);
+            //need to subtract 1 from changeThingTo because ui choice numbering starts from 1 and arrays start from 0
+            newEvent.changeMind(whatToChange, changeThingTo-1);
             //write setters and determine what to set (re-set everything? REFACTOR PARTY ELEMENTS ABOVE AS ARRAY OF INTS AW YISS)
           }
         }while(changeEvent);
@@ -63,6 +66,8 @@ public class App {
         System.out.println("");
         System.out.println("~*~*~*~*~*~*~*~*~*~*~*~Gotham Party Planning~*~*~*~*~*~*~*~*~*~*~");
         System.out.println("");
+        System.out.println("What do you think?\n1. Looks great let's do it!\n2. I need to change my food/entertainment choice\n3. I need to start over")
+        eventList.add(newEvent);
       } else if(userInput == 2){
 
       } else if(userInput == 3){
@@ -73,6 +78,7 @@ public class App {
     }while(!leave);
   } // end main
 
+  //convenience method for checking if user input parses to integer
   public static int parseWithDefault(String input, int def) {
     try {
         return Math.abs(Integer.parseInt(input));
@@ -82,6 +88,7 @@ public class App {
     }
   }
 
+  //convenience method for checking if user input is within proper bounds
   public static int getProperInput(int maxChoice){
     Console newConsole = System.console();
     int userChoice;
@@ -94,6 +101,7 @@ public class App {
     return userChoice;
   }
 
+  //method for outputting party questions
   public static int getPartyElementChoice(int whichElement){
     int inputNum=0;
     Console console = System.console();
