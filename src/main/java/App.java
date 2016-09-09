@@ -3,7 +3,6 @@ import java.util.List;
 import java.util.ArrayList;
 
 public class App {
-
   public static void main(String[] args) {
     Console console = System.console();
     boolean leave = false;
@@ -35,27 +34,32 @@ public class App {
         randomParty = getProperInput(2);
         if(randomParty == 1){
           //non-random party
+          //initial choices are essentially budget tiers
           foodType = getPartyElementChoice(2);
           bevType = getPartyElementChoice(3);
           entertainmentType = getPartyElementChoice(4);
           newEvent = new Event(guestNum, foodType-1, bevType-1, entertainmentType-1);
           do{
+            //loop runs while user wants to make changes - user chooses what they will change
             System.out.println("");
             System.out.println("~*~*~*~*~*~*~*~*~*~*~*~Gotham Party Planning~*~*~*~*~*~*~*~*~*~*~");
             System.out.println("");
+            //cost preview so user can decide to stay at these levels or not
             System.out.println("Thank you for your input! Currently, your party will cost: $" + newEvent.getCost());
             System.out.println("Would you like to make any changes before we move on? (Y/N)");
             changeEvent = (console.readLine().toUpperCase().trim().equals("Y"));
             if(changeEvent){
-              System.out.println("What would you like to change?\n1. Guest Number\n2. Food fanciness\n3.Beverage effect\n4.Entertainment Impressiveness");
+              System.out.println("What would you like to change?\n1. Guest Number\n2. Food fanciness\n3. Beverage effect\n4. Entertainment Impressiveness");
               int whatToChange = getProperInput(4);
               int changeThingTo = getPartyElementChoice(whatToChange);
-              //need to subtract 1 from changeThingTo because ui choice numbering starts from 1 and arrays start from 0
+              //need to subtract 1 from changeThingTo to match it to array indices
               newEvent.changeMind(whatToChange, changeThingTo-1);
             }
-          }while(changeEvent);
+          }while(changeEvent); //end general budget choice section
           System.out.println("Great! Let's get some details, then.");
           do{
+            //second set of party choices - user will choose specific components
+            //whole loop will repeat if user chooses to edit
             System.out.println("--------------------------------------");
             System.out.println("Please choose the number corresponding to the food you want from the options below:");
             String[] foodArray = newEvent.getFoodType();
@@ -80,6 +84,7 @@ public class App {
             System.out.println("What do you think?\n1. Looks great let's do it!\n2. I need to change my food/entertainment choice\n3. I need to start over");
             userPartyDoneChoice = getProperInput(3);
           }while(userPartyDoneChoice == 2);
+          //end specific party
         } else {
           //random party
           System.out.println("Do you care about price? (Y/N)");
@@ -100,8 +105,9 @@ public class App {
           printParty(newEvent);
           System.out.println("What do you think?\n1. Looks great let's do it!\n2. I need to start over");
           userPartyDoneChoice = getProperInput(2);
-        }
+        }//end random party
         if(userPartyDoneChoice == 1){
+          //party accepted and stored in arraylist
           System.out.println("");
           System.out.println("Great! We will contact you soon! Please note that in order to prevent supervillains from finding out about and targeting our customers' parties, it is company policy to never discuss the timing of these events except in person. If someone claiming to be from Gotham Party Planning calls or emails you asking about the date, they are not a real Gotham Party Planning employee!");
           System.out.println("");
@@ -113,6 +119,7 @@ public class App {
           eventList.add(newEvent);
         }
       } else if(userInput == 2){
+        //list every party in arraylist
         System.out.println("Here are the parties you are planning so far:");
         for(Event event : eventList){
           printParty(event);
@@ -120,11 +127,13 @@ public class App {
         System.out.println("Press enter to continue:");
         console.readLine();
       } else if(userInput == 3){
+        //causes loop to end
         leave = true;
       } else {
+        //improper input
         System.out.println("Sorry! That's not one of the options");
       }
-    }while(!leave);
+    }while(!leave);//end of main app loop - ends program once leave is true
   } // end main
 
   //convenience method for checking if user input parses to integer
@@ -173,7 +182,7 @@ public class App {
     System.out.println("--------------------------------------");
     switch(whichElement){
       case 1:
-        System.out.println("How many guests are you planning on accommodating?");
+        System.out.println("How many guests are you planning on having?");
         inputNum = parseWithDefault(console.readLine().trim(), 50);
         break;
       case 2:

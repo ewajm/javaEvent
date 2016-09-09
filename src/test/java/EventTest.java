@@ -9,6 +9,12 @@ public class EventTest{
   }
 
   @Test
+  public void newEvent_otherConstructorInstantiatesCorrectly_Event() {
+    Event testEvent = new Event(100, 5);
+    assertEquals(true, testEvent instanceof Event);
+  }
+
+  @Test
   public void getNumGuests_returnsmNumGuests_int() {
     Event testEvent = new Event(100, 0, 0, 0);
     int expectedOutput = 100;
@@ -25,7 +31,7 @@ public class EventTest{
   @Test
   public void getBevType_returnsmBevType_String() {
     Event testEvent = new Event(100, 0, 0, 0);
-    String expectedOutput = "Water";
+    String expectedOutput = "water";
     assertEquals(expectedOutput, testEvent.getBevType());
   }
 
